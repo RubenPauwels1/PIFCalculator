@@ -1,0 +1,32 @@
+.pensionAge,
+.pensionWage{
+  color: #3498db;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.reset_wrap{
+  margin-top: 40px;
+}
+
+.reset{
+  color: #fff;
+  padding: 15px;
+  background-color: #3498db;
+  text-transform: uppercase;
+  transition: all .3s;
+}
+
+.reset:after{
+  font-family: FontAwesome;
+  content: '\f0e2';
+  margin-left: 15px;
+}
+
+.reset:hover{
+  color: #3498db;
+  background-color: #fff;
+  border: 2px solid #3498db;
+  cursor: pointer;
+}

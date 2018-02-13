@@ -1,0 +1,27 @@
+.nextPage{
+  color: #ccc;
+  position: absolute;
+  top: calc(50% - 7.5px);
+  font-size: 15px;
+  right: 15px;
+  transition: all .3s;
+}
+
+.nextPage:hover{
+  color: #000;
+  cursor: pointer;
+}
+
+.prevPage{
+  color: #ccc;
+  position: absolute;
+  top: calc(50% - 7.5px);
+  font-size: 15px;
+  left: 15px;
+  transition: all .3s;
+}
+
+.prevPage:hover{
+  color: #000;
+  cursor: pointer;
+}

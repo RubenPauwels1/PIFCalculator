@@ -1,0 +1,10 @@
+.CurrentPage{
+  position: absolute;
+  bottom: -150px;
+  right: 25px;
+  font-size: 800px;
+  line-height: 800px;
+  font-weight: bold;
+  /* color: rgba(0,0,0,0.015); */
+  color: rgba(52, 152, 219, 0.05);
+}

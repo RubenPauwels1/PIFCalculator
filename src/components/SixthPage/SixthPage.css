@@ -1,0 +1,36 @@
+
+.eurosign{
+  color: #3498db;
+  font-size: 40px;
+  margin-right: 20px;
+  font-weight: bolder;
+}
+
+.numberInput.wage{
+  width: 150px;
+}
+
+.bereken_wrap{
+  margin-top: 40px;
+}
+
+.bereken{
+  color: #fff;
+  padding: 15px;
+  background-color: #3498db;
+  text-transform: uppercase;
+  transition: all .3s;
+}
+
+.bereken:after{
+  font-family: FontAwesome;
+  content: '\f054';
+  margin-left: 15px;
+}
+
+.bereken:hover{
+  color: #3498db;
+  background-color: #fff;
+  border: 2px solid #3498db;
+  cursor: pointer;
+}

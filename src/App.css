@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.App {
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  width: 50%;
+  margin: 150px auto;
+  padding: 150px;
+  position: relative;
+  box-shadow: 2px 2px 15px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.Page{
+  /* position: relative;
+  overflow: hidden;
+  padding: 150px;
+  background-color: #fff;
+  box-shadow: 2px 2px 15px rgba(0,0,0,0.2); */
+}
+
+a.selectValue{
+  border: none;
+  padding: 10px 20px;
+  color: #3498db;
+  opacity: 0.65;
+  margin: 5px;
+  outline: none;
+  font-weight: bold;
+  font-size: 32px;
+  transition: all .5s;
+}
+
+a.selectValue:hover{
+  border-bottom: 5px solid #3498db;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.slide-enter{
+  transition: all 0.3s;
+  transform: translateX(150%);
+}
+.slide-enter.slide-enter-active{
+  transform: translateX(0);
+}
+
+.slide-leave{
+  position:absolute;
+  top:50%;
+  left:50%;
+  opacity: 0;
+  transition: all 0.3s;
+  transform: translateX(0);
+}
+.slide-leave.slide-leave-active{
+  transform: translateX(-150%);
+}

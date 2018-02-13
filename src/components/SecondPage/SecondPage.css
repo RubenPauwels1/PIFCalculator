@@ -1,0 +1,34 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  padding: 0;
+}
+
+.numberInput{
+  color: #3498db;
+  font-size: 40px;
+  outline: none;
+  border: none;
+  font-weight: bold;
+  width: auto;
+  text-align: center;
+  background-color: transparent;
+}
+
+.numberInput.day,
+.numberInput.month{
+  width: 65px;
+  /* margin-right: -15px; */
+}
+
+.numberInput.year{
+  width: 115px;
+  margin-left: -5px;
+}
+
+.dateseparator{
+  font-size: 40px;
+  line-height: 40px;
+  margin: 0 5px;
+}
