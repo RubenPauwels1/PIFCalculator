@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Cleave from 'cleave.js/react';
 import './SecondPage.css';
 
@@ -36,12 +36,13 @@ class SecondPage extends Component {
     const { nextPage, prevPage, birthday, birthmonth, birthyear } = this.props
     return (
       <div className="SecondPage">
-          <div>
-            <h1>Geboortedatum</h1>
+          <Fragment>
+            <h2>Geboortedatum</h2>
             <Cleave
              htmlRef={(ref) => this.day = ref }
              placeholder="DD"
              className="numberInput day"
+             type="tel"
              value={birthday}
              options={{
                date: true,
@@ -53,6 +54,7 @@ class SecondPage extends Component {
             htmlRef={(ref) => this.month = ref }
             placeholder="MM"
             className="numberInput month"
+            type="tel"
             value={birthmonth}
             options={{
               date: true,
@@ -64,13 +66,14 @@ class SecondPage extends Component {
             htmlRef={(ref) => this.year = ref }
             placeholder="JJJJ"
             className="numberInput year"
+            type="tel"
             value={birthyear}
             options={{
               date: true,
               datePattern: ['Y']
             }}
             onChange={this.selectYear} />
-          </div>
+          </Fragment>
           <Buttons nextPage={nextPage} prevPage={prevPage}/>
       </div>
     );

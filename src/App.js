@@ -24,6 +24,7 @@ class App extends Component {
       birthyear: '',
       maritialstatus: '',
       job: '',
+      subjob: '',
       startYear: '',
       wage: '',
     }
@@ -53,6 +54,10 @@ class App extends Component {
     this.setState({job: val})
   }
 
+  selectSubJob = (val) => {
+    this.setState({subjob: val})
+  }
+
   selectStartYear = (val) => {
     this.setState({startYear: val})
   }
@@ -70,6 +75,7 @@ class App extends Component {
       birthyear: '',
       maritialstatus: '',
       job: '',
+      subjob: '',
       startYear: '',
       wage: '',
     })
@@ -84,11 +90,11 @@ class App extends Component {
   }
 
   render() {
-    const { page, gender, birthday, birthmonth, birthyear, maritialstatus, job, startYear, wage } = this.state
+    const { page, gender, birthday, birthmonth, birthyear, maritialstatus, job, subjob, startYear, wage } = this.state
     return (
-      <div className="App">
-        <div className="Page">
-          <CSSTransitionGroup transitionName="slide" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+      <div className={`App Page${page}`}>
+        <div className="Page" page={page} >
+          <CSSTransitionGroup transitionName="slide" transitionEnterTimeout={300} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={300}>
             <CurrentPage page={page}/>
             {page === 1 && <FirstPage
               selectGender={this.selectGender}
@@ -113,9 +119,11 @@ class App extends Component {
               />}
             {page === 4 && <FourthPage
               selectJob={this.selectJob}
+              selectSubJob={this.selectSubJob}
               nextPage={this.nextPage}
               prevPage={this.previousPage}
               job={job}
+              subjob={subjob}
               />}
             {page === 5 && <FifthPage
               selectStartYear={this.selectStartYear}
@@ -133,7 +141,7 @@ class App extends Component {
               resetAll={this.resetAll}
               fields={this.state}
               />}
-              </CSSTransitionGroup>
+            </CSSTransitionGroup>
           </div>
       </div>
     );

@@ -5,6 +5,12 @@
   font-size: 800px;
   line-height: 800px;
   font-weight: bold;
-  /* color: rgba(0,0,0,0.015); */
-  color: rgba(52, 152, 219, 0.05);
+  z-index: -1;
+  color: rgba(0, 133, 157, .05);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+}
+
+.CurrentPage.p7{
+  display: none !important;
 }

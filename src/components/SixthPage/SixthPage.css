@@ -1,6 +1,6 @@
 
 .eurosign{
-  color: #3498db;
+  color: #88C2CD;
   font-size: 40px;
   margin-right: 20px;
   font-weight: bolder;
@@ -15,22 +15,23 @@
 }
 
 .bereken{
-  color: #fff;
+  color: #88C2CD;
   padding: 15px;
-  background-color: #3498db;
+  background-color: #fff;
+  border: 2px solid #88C2CD;
   text-transform: uppercase;
   transition: all .3s;
+  letter-spacing: 2px;
 }
 
 .bereken:after{
   font-family: FontAwesome;
-  content: '\f054';
-  margin-left: 15px;
+  content: '\f0da';
+  margin-left: 10px;
 }
 
 .bereken:hover{
-  color: #3498db;
-  background-color: #fff;
-  border: 2px solid #3498db;
+  color: #fff;
+  background-color: #88C2CD;
   cursor: pointer;
 }

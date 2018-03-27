@@ -5,7 +5,7 @@ class CurrentPage extends Component {
   render() {
     const { page } = this.props
     return (
-      <div className="CurrentPage">
+      <div className={`CurrentPage p${page}`}>
         {page}
       </div>
     );

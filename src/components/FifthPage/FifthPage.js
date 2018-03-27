@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Cleave from 'cleave.js/react';
 import './FifthPage.css';
 
@@ -19,11 +19,12 @@ class FifthPage extends Component {
 
     return (
       <div className="FifthPage">
-          <div>
-            <h1>Startjaar Loopbaan</h1>
+          <Fragment>
+            <h2>Startjaar loopbaan</h2>
             <Cleave
                placeholder="0000"
                className="numberInput wage"
+               type="tel"
                value={startYear}
                options={{
                 blocks: [4],
@@ -31,7 +32,7 @@ class FifthPage extends Component {
                 numericOnly: true
                }}
              onChange={this.selectStartYear} />
-          </div>
+          </Fragment>
           <Buttons nextPage={nextPage} prevPage={prevPage}/>
       </div>
     );

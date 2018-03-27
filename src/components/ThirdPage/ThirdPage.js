@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './ThirdPage.css';
 
 import Buttons from './../Buttons/Buttons';
@@ -13,8 +13,8 @@ class ThirdPage extends Component {
     const { nextPage, prevPage, maritialstatus } = this.props
     return (
       <div className="ThirdPage">
-          <div>
-            <h1>Burgerlijke Staat</h1>
+          <Fragment>
+            <h2>Burgerlijke staat</h2>
             <select onChange={this.selectMaritalStatus} value={maritialstatus} className="selectMaritalStatus">
               <option value="">Selecteer</option>
               <option value="Alleenstaand">Alleenstaand</option>
@@ -22,7 +22,7 @@ class ThirdPage extends Component {
               <option value="Wettelijk samenwonend">Wettelijk samenwonend</option>
               <option value="Gehuwd">Gehuwd</option>
             </select>
-          </div>
+          </Fragment>
           <Buttons nextPage={nextPage} prevPage={prevPage}/>
       </div>
     );

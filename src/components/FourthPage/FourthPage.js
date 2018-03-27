@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './FourthPage.css';
 
 import Buttons from './../Buttons/Buttons';
@@ -6,24 +6,54 @@ import Buttons from './../Buttons/Buttons';
 class FourthPage extends Component {
   selectJob = (event) => {
     this.props.selectJob(event.target.value)
-    this.props.nextPage()
+
+    if(event.target.value !== 'Zelfstandige'){
+      this.props.nextPage()
+    }
+  }
+
+  selectSubJob = (event) => {
+      this.props.selectSubJob(event.target.getAttribute('data-value'))
+      this.props.nextPage()
+  }
+
+  clearSubJob = () => {
+    this.props.selectSubJob('')
+    this.props.selectJob('')
   }
 
   render() {
-    const { nextPage, prevPage, job } = this.props
+    const { nextPage, prevPage, job, subjob } = this.props
 
     return (
       <div className="FourthPage">
-          <div>
-            <h1>Beroep</h1>
-            <select onChange={this.selectJob} value={job} className="selectJob">
-              <option value="">Selecteer</option>
-              <option value="Bediende">Bediende</option>
-              <option value="Arbeider">Arbeider</option>
-              <option value="Zelfstandige">Zelfstandige</option>
-              <option value="Ambtenaar">Ambtenaar</option>
-            </select>
-          </div>
+          <Fragment>
+
+            {job !== 'Zelfstandige' && subjob === '' &&
+            <Fragment>
+              <h2>Beroep</h2>
+              <select onChange={this.selectJob} value={job} className="selectJob">
+                <option value="">Selecteer</option>
+                <option value="Bediende">Bediende</option>
+                <option value="Arbeider">Arbeider</option>
+                <option value="Zelfstandige">Zelfstandige</option>
+                <option value="Ambtenaar">Ambtenaar</option>
+              </select>
+            </Fragment>
+            }
+
+            {job === 'Zelfstandige' &&
+            <Fragment>
+              <h2>Zelfstandige in hoofd- of bijberoep?</h2>
+              <div className="selectValues">
+                <a className="back" onClick={this.clearSubJob}>Terug</a>
+                <a className="selectValue" data-value="Zelfstandige_Hoofdberoep" onClick={this.selectSubJob}>Hoofdberoep</a>
+                <a className="selectValue" data-value="Zelfstandige_Bijberoep" onClick={this.selectSubJob}>Bijberoep</a>
+              </div>
+            </Fragment>
+            }
+
+          </Fragment>
           <Buttons nextPage={nextPage} prevPage={prevPage}/>
       </div>
     );

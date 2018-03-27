@@ -2,10 +2,35 @@ select.selectJob{
   padding: 15px;
   outline: none;
   font-weight: bold;
-  color: #3498db;
-  border: 2px solid #3498db;
+  color: #88C2CD;
+  border: 2px solid #88C2CD;
 }
 
 select.selectJob option{
   height: 30px;
+}
+
+a.back{
+  border: 2px solid transparent;
+  padding: 15px 30px;
+  opacity: 0.65;
+  margin: 5px;
+  outline: none;
+  font-weight: bold;
+  transition: all .3s;
+  background-color: #eee;
+  color: #c0c0c0;
+  opacity: 1;
+}
+
+a.back:hover{
+  cursor: pointer;
+  background-color: #ddd;
+  color: #0c0c0c;
+}
+
+a.back::before{
+  content: '\f060';
+  font-family: FontAwesome, Lato;
+  margin-right: 10px;
 }

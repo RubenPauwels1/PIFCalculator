@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Cleave from 'cleave.js/react';
 import './SixthPage.css';
 
@@ -22,13 +22,14 @@ class SixthPage extends Component {
 
     return (
       <div className="SixthPage">
-          <div>
-            <h1>Brutto Jaarloon</h1>
-            <div>
+          <Fragment>
+            <h2>Huidig bruto jaarloon</h2>
+            <Fragment>
               <span className="eurosign">€</span>
               <Cleave
                  placeholder="0"
                  className="numberInput wage"
+                 type="tel"
                  value={wage}
                  options={{
                   numeral: true,
@@ -36,11 +37,11 @@ class SixthPage extends Component {
                   delimiter: '.'
                  }}
                onChange={this.selectWage} />
-            </div>
+            </Fragment>
             <div className="bereken_wrap">
               <a className="bereken" onClick={nextPage}>Bereken mijn pensioen</a>
             </div>
-          </div>
+          </Fragment>
           <Buttons prevPage={prevPage} />
       </div>
     );

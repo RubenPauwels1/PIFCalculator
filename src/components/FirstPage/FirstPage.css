@@ -1,1 +1,50 @@
+a.selectValue{
+  border: 2px solid #88C2CD;
+  color: #88C2CD;
+  padding: 15px 30px;
+  opacity: 0.65;
+  margin: 5px;
+  outline: none;
+  font-weight: bold;
+  transition: all .3s;
+  opacity: 1;
+  letter-spacing: 2px;
+}
 
+a.selectValue:hover{
+  background-color: #88C2CD;
+  color: #fff;
+  cursor: pointer;
+}
+
+.selectValues{
+  transition: all .3s;
+  margin-top: 45px;
+}
+
+a.selectValue.men::after{
+  content: '\f222';
+  font-family: FontAwesome;
+  margin-left: 10px;
+}
+
+a.selectValue.women::after{
+  content: '\f221';
+  font-family: FontAwesome;
+  margin-left: 10px;
+}
+
+a.selectValue.other::after{
+  content: '\f224';
+  font-family: FontAwesome;
+  margin-left: 10px;
+}
+
+/* Fade out all items when the parent is hovered */
+.selectValues:hover > * {
+  opacity: 0.5;
+}
+
+.selectValues > *:hover {
+   opacity: 1;
+ }
