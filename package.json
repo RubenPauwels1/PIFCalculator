@@ -2,7 +2,6 @@
   "name": "pensionisfun",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://fluxwebdesign.be/customer/pensionisfun/calc",
   "dependencies": {
     "axios": "^0.18.0",
     "cleave.js": "^1.1.1",

@@ -46,9 +46,9 @@ class FourthPage extends Component {
             <Fragment>
               <h2>Zelfstandige in hoofd- of bijberoep?</h2>
               <div className="selectValues">
-                <a className="back" onClick={this.clearSubJob}>Terug</a>
-                <a className="selectValue" data-value="Zelfstandige_Hoofdberoep" onClick={this.selectSubJob}>Hoofdberoep</a>
-                <a className="selectValue" data-value="Zelfstandige_Bijberoep" onClick={this.selectSubJob}>Bijberoep</a>
+                <a className="btn back" onClick={this.clearSubJob}>Terug</a>
+                <a className="btn selectValue" data-value="Zelfstandige_Hoofdberoep" onClick={this.selectSubJob}>Hoofdberoep</a>
+                <a className="btn selectValue" data-value="Zelfstandige_Bijberoep" onClick={this.selectSubJob}>Bijberoep</a>
               </div>
             </Fragment>
             }

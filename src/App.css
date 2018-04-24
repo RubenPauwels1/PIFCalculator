@@ -74,7 +74,7 @@ p {
   clear: both;
 }
 
-a:not(.button){
+a.btn{
   padding: 15px 30px;
   line-height: 52px;
   /* border-radius: 30px; */
@@ -102,7 +102,8 @@ select:hover {
   cursor: pointer;
 }
 
-#root {
+/* #root,
+#pension_calculator{
   background-image: url('./assets/img/background.jpg');
   background-size: cover;
   width: 100%;
@@ -111,9 +112,10 @@ select:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
-#root::before {
+/* #root::before,
+#pension_calculator::before {
   content: '';
   display: block;
   position: absolute;
@@ -122,32 +124,32 @@ select:hover {
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.1);
-}
+} */
 
 .App {
   font-family: 'Lato', sans-serif;
   background-color: #fff;
   opacity: 0.945;
   text-align: center;
-  width: 60%;
+  width: calc(100% - 300px);
   padding: 150px;
   position: relative;
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.22);
-  max-height: calc(80vh - 300px);
+  /* max-height: calc(80vh - 300px); */
   overflow: hidden;
 }
 
-.App.Page7{
+/* .App.Page7{
   width: 70%;
   padding: 100px 150px;
   max-height: calc(95vh - 300px);
-}
+} */
 
 /* OVERFLOW SCROLL FOR FINAL PAGE */
 
-.App.Page7{
+/* .App.Page7{
   overflow-y: scroll;
-}
+} */
 
 .slide-enter {
   transition: all 0.3s;

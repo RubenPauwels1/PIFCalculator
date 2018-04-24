@@ -8,6 +8,21 @@
   text-transform: uppercase;
 }
 
+.smalltext{
+  font-size: 13px;
+}
+
+a.link{
+  padding: 0;
+  line-height: 30px;
+  box-shadow: none;
+  color: #000;
+}
+
+a.link:hover{
+  color: #88C2CD;
+}
+
 .pensionAge, .pensionWage {
   color: #88C2CD;
   font-size: 40px;

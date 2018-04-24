@@ -39,7 +39,7 @@ class SixthPage extends Component {
                onChange={this.selectWage} />
             </Fragment>
             <div className="bereken_wrap">
-              <a className="bereken" onClick={nextPage}>Bereken mijn pensioen</a>
+              <a className="btn bereken" onClick={nextPage}>Bereken mijn pensioen</a>
             </div>
           </Fragment>
           <Buttons prevPage={prevPage} />

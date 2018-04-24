@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import YouTubePlayer from 'react-player/lib/players/YouTube'
-import WPAPI from 'wpapi'
-// import axios from 'axios'
+// import WPAPI from 'wpapi'
+import axios from 'axios'
 
 import './FinalPage.css'
 
@@ -51,7 +51,7 @@ class FinalPage extends Component {
     let maritialstatusperc = this.calcMaritialStatusPerc(maritialStatus);
 
     //PENSION BRUTTO WAGE
-    console.log('# of worked years: ' + numberOfWorkedYearsCalced + ' | wage: ' + wage + ' | Maritial status %: ' + maritialstatusperc);
+    // console.log('# of worked years: ' + numberOfWorkedYearsCalced + ' | wage: ' + wage + ' | Maritial status %: ' + maritialstatusperc);
     let pensionWage = (numberOfWorkedYearsCalced / 45) * wage * maritialstatusperc;
     return parseInt(pensionWage, radix);
   };
@@ -63,9 +63,24 @@ class FinalPage extends Component {
     return parseInt(wage, radix) * maritialstatusperc;
   }
 
-  calcRetireYear = (startYear) => {
-    const { radix } = this.state
-    return parseInt(startYear, radix) + 45
+  calcRetireYear = (startYear, birthYear) => {
+    const { radix, currentYear } = this.state
+
+    startYear = parseInt(startYear, radix)
+    birthYear = parseInt(birthYear, radix)
+    const workedYears = parseInt((currentYear - startYear), radix)
+
+    if(workedYears >= 45){
+      return startYear + 45
+    }
+
+    if(birthYear + 65 >= 2018 && birthYear + 65 <= 2024){
+      return birthYear + 65
+    } else if(birthYear + 66 >= 2025 && birthYear + 66 <= 2029){
+      return birthYear + 66
+    }
+
+    return birthYear + 67
   }
 
   setFirst = (event) => {
@@ -100,64 +115,70 @@ class FinalPage extends Component {
     })
   }
 
+  handleScrollToTop = (event) => {
+    const calcNode = ReactDOM.findDOMNode(this.refs.top)
+    calcNode.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }
+
   createWPPost = (event) => {
     event.preventDefault()
 
     const { firstname, lastname, tel, email } = this.state
+    const { birthday, birthmonth, birthyear, gender, job, maritialstatus, startYear, subjob, wage } = this.props.fields
+
+    const post = {
+      content: 'leeg',
+      title: `${firstname} ${lastname}`,
+      status: 'publish',
+      // CPT
+      type: 'lead',
+      // ACFs
+      fields: {
+          voornaam: firstname,
+          familienaam: lastname,
+          email: email,
+          tel: tel,
+          geboortedatum: `${birthday}-${birthmonth}-${birthyear}`,
+          geslacht: gender,
+          job: `${job} ${subjob}`,
+          status: maritialstatus,
+          brutoloon: wage,
+          startjaar: startYear,
+      }
+    }
+
+    const config = {
+        headers:
+        {
+          'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9mbHV4d2ViZGVzaWduLmJlXC9jdXN0b21lclwvcGVuc2lvbmlzZnVuIiwiaWF0IjoxNTI0NDc2NTM2LCJuYmYiOjE1MjQ0NzY1MzYsImV4cCI6NjMxMTM4NTIwMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMiJ9fX0.Gof9E4zNEEyqj1aHYam00LqMx_8kMqHoOknEABYZSZo"
+        }
+      };
 
     if(firstname !== '' && lastname !== '' && email !== ''){
-      // WP API CREATE POST
-
-      const wp = new WPAPI({
-        endpoint: 'http://fluxwebdesign.be/customer/pensionisfun/wp-json/',
-        username: 'restuser',
-        password: 'restuser',
-      })
-
-      //IF 401 CANNOT CREATE POST: install plugin from GITHUB instead of Wordpress!
-
-      wp.posts().create({
-        title: `${firstname} ${lastname}`,
-        content: `${firstname} ${lastname} ${email} ${tel}`,
-        status: 'publish',
-      }).then((response) => {
-        // console.log( response )
-        this.setSent()
-      })
-
-      // AXIOS CREATE CUSTOM posts -> NOR WORKING (YET)
-
-      // axios.post('http://fluxwebdesign.be/customer/pensionisfun/wp-json/wp/v2/lead', {
-      //   withCredentials: true,
-      //   auth: {
-      //       username: 'restuser',
-      //       password: 'restuser'
-      //   },
-      //   params: {
-      //     title: `${firstname} ${lastname}`,
-      //     content: `${firstname} ${lastname} ${email} ${tel}`,
-      //     status: 'publish',
-      //   },
-        // headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json',
-        // },
-    //})
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      // AXIOS CREATE CUSTOM posts
+      axios.post(`http://fluxwebdesign.be/customer/pensionisfun/wp-json/wp/v2/lead`, post, config)
+          .then(response => {
+              console.log(response.data)
+              this.setSent()
+          })
+          .catch(err => {
+              console.log(err)
+          });
 
     } else {
-      alert('Gelieve alle velden in te vullen.');
+      alert('Gelieve alle velden in te vullen.')
     }
   }
 
   setSent = () => {
     this.setState({
+      firstname: '',
+      lastname: '',
       email: '',
+      tel: '',
       sent: true,
     })
   }
@@ -166,8 +187,6 @@ class FinalPage extends Component {
     const { fields, resetAll } = this.props
     const { sent } = this.state
 
-    // PENSION-AGE
-    const pensionAge = 65; /* TODO: CALCULATE! */
 
     // let pensionWageNowPerYear = this.calcPensionWageNowPerYear(fields.startYear, fields.wage, fields.maritialstatus)
     // let pensionWageNowPerMonth = pensionWageNowPerYear / 12;
@@ -175,17 +194,15 @@ class FinalPage extends Component {
     let pensionWagePerYear = this.calcPensionWagePerYear(fields.wage, fields.maritialstatus);
     let pensionWagePerMonth = pensionWagePerYear / 12;
 
-    let pensionYear = this.calcRetireYear(fields.startYear);
+    let pensionYear = this.calcRetireYear(fields.startYear, fields.birthyear);
+    // PENSION-AGE
+    const pensionAge = pensionYear - fields.birthyear;
 
 
     if(!pensionWagePerYear){
-      // pensionWageNowPerYear = "Niet genoeg gegevens opgegeven"
-      // pensionWageNowPerMonth = "Niet genoeg gegevens opgegeven"
       pensionWagePerYear = "Niet genoeg gegevens opgegeven"
       pensionWagePerMonth = "Niet genoeg gegevens opgegeven"
     } else {
-      // pensionWageNowPerYear = "€ " + pensionWageNowPerYear.toLocaleString('nl-BE', {maximumFractionDigits: 2})
-      // pensionWageNowPerMonth = "€ " + pensionWageNowPerMonth.toLocaleString('nl-BE', {maximumFractionDigits: 2})
       pensionWagePerYear = "€ " + pensionWagePerYear.toLocaleString('nl-BE', {maximumFractionDigits: 2})
       pensionWagePerMonth = "€ " + pensionWagePerMonth.toLocaleString('nl-BE', {maximumFractionDigits: 2})
     }
@@ -193,7 +210,7 @@ class FinalPage extends Component {
     return (
       <div className="FinalPage">
           <Fragment>
-            <h1>Jouw pensioen.</h1>
+            <h1 ref="top">Jouw pensioen.</h1>
             {/*<div className="clearfix">
               <p>Zou u nu met pensioen gaan zou u een wettelijk pensioen ontvangen van ongeveer</p>
               <div className="block">
@@ -207,16 +224,16 @@ class FinalPage extends Component {
             </div>*/}
             <div className="clearfix">
               <div className="block">
-                <p>U zal op pensioen kunnen gaan op</p>
+                <p>Je zal waarschijnlijk op pensioen kunnen gaan op</p>
                 <p className="pensionAge">{pensionAge} jaar</p>
               </div>
               <div className="block">
-                <p>U zal op pensioen kunnen gaan in</p>
+                <p>Je zal waarschijnlijk op pensioen kunnen gaan in</p>
                 <p className="pensionAge">{pensionYear}</p>
               </div>
             </div>
             <div className="clearfix">
-              <p>Zou u op uw {pensionAge}ste op pensioen gaan zou u een wettelijk pensioen ontvangen van ongeveer</p>
+              <p>Zou je op je {pensionAge}ste op pensioen gaan zou je waarschijnlijk een wettelijk pensioen ontvangen van ongeveer</p>
               <div className="block">
                 <p className="pensionWage">{pensionWagePerYear}</p>
                 <p className="per">per jaar</p>
@@ -226,10 +243,23 @@ class FinalPage extends Component {
                 <p className="per">per maand</p>
               </div>
             </div>
+
+            {fields.subjob === '' &&
+            <div className="clearfix">
+            <p className="smalltext">Deze berekening is louter een schatting van jouw wettelijk pensioen. Voor een gedetailleerde berekening surf je best naar <a class="link" href="http://mypension.be" target="_blank" rel="noopener noreferrer">mypension.be</a>. Heb je dit nog nooit gedaan? Bekijk onze tutorial met live uitleg en ontdek alles wat MyPension te bieden heeft.</p>
+            </div>
+            }
+
+            {fields.subjob !== '' &&
+            <div className="clearfix">
+              <p className="smalltext">Deze berekening is louter een schatting van jouw wettelijk pensioen. Heb je graag een meer gedetailleerde berekening? Neem dan contact met ons op.</p>
+            </div>
+            }
+
             <div className="reset_wrap">
-              <a className="reset" onClick={resetAll}>Herbeginnen</a>
+              <a className="btn reset" onClick={() => { this.handleScrollToTop(); resetAll(); }}>Herbeginnen</a>
               {fields.subjob !== '' &&
-              <a className="calc" onClick={this.handleScrollToElement}>Berekening op maat</a>
+              <a className="btn calc" onClick={this.handleScrollToElement}>Berekening op maat</a>
               }
             </div>
             {fields.subjob !== '' &&
@@ -250,7 +280,7 @@ class FinalPage extends Component {
                 }
 
                 {sent === true &&
-                <p>Bedankt! Er zal spoedig met u contact opgenomen worden.</p>
+                <p>Bedankt! We nemen zo snel mogelijk contact met je op.</p>
                 }
 
               </div>
@@ -260,14 +290,13 @@ class FinalPage extends Component {
                 <div className='text_wrap_inner'>
                   <h2>Hoezo pensioen is saai?</h2>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae aspernatur iure, consectetur et architecto, possimus dicta fugit sint quia quas praesentium modi. Neque quia reprehenderit et in ab iure, blanditiis.</p>
-                  <a className="button" href="https://flux.be">See it here!</a>
+                  <a className="button" href="https://google.be" target="_blank" rel="noopener noreferrer">See it here!</a>
                 </div>
               </div>
               <div className="player_wrap">
                 <YouTubePlayer
                   className='react-player'
                   url='https://www.youtube.com/watch?v=d46Azg3Pm4c'
-                  playing
                   controls
                   width='100%'
                   height='280px'
