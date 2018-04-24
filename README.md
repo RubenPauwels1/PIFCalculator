@@ -1,14 +1,14 @@
-## Pensioncalculator in React
+# Pensioncalculator in React
 
 A calculator for Pension is fun written in ReactJS.
 
-# Installation
+## Installation
 
 1. `npm install` or `yarn install`
 2. `npm start` or `yarn start`
 3. Enjoy!
 
-# Installation in Wordpress
+## Installation in Wordpress
 
 1. `npm build` or `yarn build`
 2. Copy the contents of `build > static` to `pif`
