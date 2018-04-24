@@ -1,2 +1,0 @@
-# PIFCalculator
-Pensioncalculator in React
