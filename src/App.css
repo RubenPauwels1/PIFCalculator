@@ -102,6 +102,7 @@ select:hover {
   cursor: pointer;
 }
 
+
 /* #root,
 #pension_calculator{
   background-image: url('./assets/img/background.jpg');
@@ -133,10 +134,17 @@ select:hover {
   text-align: center;
   width: calc(100% - 300px);
   padding: 150px;
-  position: relative;
+  position: relative !important;
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.22);
   /* max-height: calc(80vh - 300px); */
   overflow: hidden;
+}
+
+@media screen and (max-width: 768px){
+  .App {
+    width: calc(100% - 90px);
+    padding: 45px
+  }
 }
 
 /* .App.Page7{
@@ -181,4 +189,33 @@ select:hover {
 .slide-appear.slide-appear-active {
   opacity: 1;
   transition: opacity .3s ease-in;
+}
+
+@media screen and (max-width: 768px){
+  .App .block{
+      width: 70%;
+      margin-right: 0;
+      margin-left: 15%;
+      margin-bottom: 15px;
+  }
+
+  .App .clearfix p:first-of-type{
+      margin-top: 10px;
+  }
+
+  .App .reset_wrap a.btn{
+      display: inline-block;
+      padding: 5px 15px;
+      margin-bottom: 15px;
+  }
+
+  .App .video_wrap .text_wrap,
+  .App .video_wrap .player_wrap{
+      width: 100%;
+  }
+
+  .App .video_wrap .text_wrap h2,
+  .App .video_wrap .text_wrap p{
+      text-align: center;
+  }
 }

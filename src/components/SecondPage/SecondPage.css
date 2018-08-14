@@ -32,3 +32,24 @@ input[type=number]::-webkit-outer-spin-button {
   line-height: 40px;
   margin: 0 5px;
 }
+
+@media screen and (max-width: 768px){
+  .dateseparator{
+    font-size: 25px;
+    line-height: 25px;
+  }
+
+  .numberInput{
+    font-size: 25px;
+  }
+
+  .numberInput.day,
+  .numberInput.month{
+    width: 45px;
+    /* margin-right: -15px; */
+  }
+
+  .numberInput.year{
+    width: 80px;
+  }
+}

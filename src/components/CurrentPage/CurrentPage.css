@@ -14,3 +14,11 @@
 .CurrentPage.p7{
   display: none !important;
 }
+
+@media screen and (max-width: 768px){
+  .CurrentPage {
+    bottom: -31px;
+    font-size: 200px;
+    line-height: 200px;
+  }
+}

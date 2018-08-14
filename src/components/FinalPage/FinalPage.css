@@ -112,7 +112,7 @@ a.link:hover{
 
 .video_wrap > .player_wrap{
   float: right;
-  height: 280px;
+  /*height: 280px;*/
   width: 50%;
 }
 
@@ -132,7 +132,7 @@ a.link:hover{
   margin-bottom: 20px;
 }
 
-.contact_form input[type=email],
+/* .contact_form input[type=email],
 .contact_form input[type=text],
 .contact_form input[type=tel]{
   background-color: #fff;
@@ -147,7 +147,6 @@ a.link:hover{
   text-indent: 10px;
   width: auto;
   width: calc(50% - 35px);
-  /* border-radius: 20px; */
 }
 
 .contact_form input[type=email]::placeholder,
@@ -161,6 +160,26 @@ a.link:hover{
 .contact_form input[type=text]:focus,
 .contact_form input[type=tel]:focus{
   outline: none;
+} */
+
+.App .contact_form input:not([type=submit]){
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 15px 12px;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  resize: none;
+  font-size: 13px;
+  line-height: 17px;
+  background-color: #fff;
+  color: #818181;
+  font-family: Raleway,serif;
+  font-weight: 400;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;   
 }
 
 .text_wrap .button{

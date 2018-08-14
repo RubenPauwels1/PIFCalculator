@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import ReactDOM from 'react-dom'
-import YouTubePlayer from 'react-player/lib/players/YouTube'
+import VimeoPlayer from 'react-player/lib/players/Vimeo'
 // import WPAPI from 'wpapi'
 import axios from 'axios'
 
@@ -53,14 +53,40 @@ class FinalPage extends Component {
     //PENSION BRUTTO WAGE
     // console.log('# of worked years: ' + numberOfWorkedYearsCalced + ' | wage: ' + wage + ' | Maritial status %: ' + maritialstatusperc);
     let pensionWage = (numberOfWorkedYearsCalced / 45) * wage * maritialstatusperc;
+
     return parseInt(pensionWage, radix);
   };
 
-  calcPensionWagePerYear = (wage, maritialStatus) => {
+  calcPensionWagePerYear = (wage, maritialStatus, job) => {
     const { radix } = this.state
 
-    let maritialstatusperc = this.calcMaritialStatusPerc(maritialStatus)
-    return parseInt(wage, radix) * maritialstatusperc;
+    let maritialstatusperc = this.calcMaritialStatusPerc(maritialStatus);
+
+    let pensionWage = wage * maritialstatusperc;
+    console.log(pensionWage);
+
+    //Max Pension Wage
+    let maxPensionWage = 0;
+
+    if(job === 'Zelfstandige' && maritialStatus === 'Gehuwd'){
+      maxPensionWage = 1756.60 * 12;
+    } else if(job === 'Zelfstandige' && maritialStatus !== 'Gehuwd'){
+      maxPensionWage = 1405.28 * 12;
+    } else if(maritialStatus === 'Gehuwd'){
+      maxPensionWage = 2988.45 * 12;
+    } else {
+      maxPensionWage = 2390.76 * 12;
+    }
+
+    console.log(maxPensionWage);
+
+    if(pensionWage > maxPensionWage){
+      console.log('using max pension');
+      return parseInt(maxPensionWage, radix);
+    } else{
+      console.log('using normal pension');
+      return parseInt(pensionWage, radix);
+    }
   }
 
   calcRetireYear = (startYear, birthYear) => {
@@ -153,13 +179,13 @@ class FinalPage extends Component {
     const config = {
         headers:
         {
-          'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9mbHV4d2ViZGVzaWduLmJlXC9jdXN0b21lclwvcGVuc2lvbmlzZnVuIiwiaWF0IjoxNTI0NDc2NTM2LCJuYmYiOjE1MjQ0NzY1MzYsImV4cCI6NjMxMTM4NTIwMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMiJ9fX0.Gof9E4zNEEyqj1aHYam00LqMx_8kMqHoOknEABYZSZo"
+          'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYmVyZWtlbnBlbnNpb2VuLmJlIiwiaWF0IjoxNTM0MjMwMjUyLCJuYmYiOjE1MzQyMzAyNTIsImV4cCI6NjMxMTM4NTIwMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMiJ9fX0.fq0P0oKWzqPIveWRtBr4Itoa0GXJeuDwhTPg8xM5-6Q"
         }
       };
 
     if(firstname !== '' && lastname !== '' && email !== ''){
       // AXIOS CREATE CUSTOM posts
-      axios.post(`http://fluxwebdesign.be/customer/pensionisfun/wp-json/wp/v2/lead`, post, config)
+      axios.post(`https://berekenpensioen.be/wp-json/wp/v2/lead`, post, config)
           .then(response => {
               console.log(response.data)
               this.setSent()
@@ -191,7 +217,7 @@ class FinalPage extends Component {
     // let pensionWageNowPerYear = this.calcPensionWageNowPerYear(fields.startYear, fields.wage, fields.maritialstatus)
     // let pensionWageNowPerMonth = pensionWageNowPerYear / 12;
 
-    let pensionWagePerYear = this.calcPensionWagePerYear(fields.wage, fields.maritialstatus);
+    let pensionWagePerYear = this.calcPensionWagePerYear(fields.wage, fields.maritialstatus, fields.job);
     let pensionWagePerMonth = pensionWagePerYear / 12;
 
     let pensionYear = this.calcRetireYear(fields.startYear, fields.birthyear);
@@ -228,12 +254,12 @@ class FinalPage extends Component {
                 <p className="pensionAge">{pensionAge} jaar</p>
               </div>
               <div className="block">
-                <p>Je zal waarschijnlijk op pensioen kunnen gaan in</p>
+                <p>In het jaar</p>
                 <p className="pensionAge">{pensionYear}</p>
               </div>
             </div>
             <div className="clearfix">
-              <p>Zou je op je {pensionAge}ste op pensioen gaan zou je waarschijnlijk een wettelijk pensioen ontvangen van ongeveer</p>
+              <p>Wanneer je op pensioen zou gaan op {pensionAge} jaar, zou je een wettelijk pensioen ontvangen van ongeveer</p>
               <div className="block">
                 <p className="pensionWage">{pensionWagePerYear}</p>
                 <p className="per">per jaar</p>
@@ -244,18 +270,6 @@ class FinalPage extends Component {
               </div>
             </div>
 
-            {fields.subjob === '' &&
-            <div className="clearfix">
-            <p className="smalltext">Deze berekening is louter een schatting van jouw wettelijk pensioen. Voor een gedetailleerde berekening surf je best naar <a class="link" href="http://mypension.be" target="_blank" rel="noopener noreferrer">mypension.be</a>. Heb je dit nog nooit gedaan? Bekijk onze tutorial met live uitleg en ontdek alles wat MyPension te bieden heeft.</p>
-            </div>
-            }
-
-            {fields.subjob !== '' &&
-            <div className="clearfix">
-              <p className="smalltext">Deze berekening is louter een schatting van jouw wettelijk pensioen. Heb je graag een meer gedetailleerde berekening? Neem dan contact met ons op.</p>
-            </div>
-            }
-
             <div className="reset_wrap">
               <a className="btn reset" onClick={() => { this.handleScrollToTop(); resetAll(); }}>Herbeginnen</a>
               {fields.subjob !== '' &&
@@ -265,8 +279,8 @@ class FinalPage extends Component {
             {fields.subjob !== '' &&
               <div className="contact_wrap">
                 <div className="contact_text">
-                  <h2>Wenst u een berekening op maat?</h2>
-                  <p>Laat hieronder uw gegevens achter, we contacteren u zo spoedig mogelijk.</p>
+                  <h2>Graag een berekening op maat?</h2>
+                  <p>Laat jouw gegevens achter, we contacteren je zo snel mogelijk!</p>
                 </div>
 
                 {sent === false &&
@@ -288,18 +302,18 @@ class FinalPage extends Component {
             <div className='video_wrap clearfix'>
               <div className='text_wrap'>
                 <div className='text_wrap_inner'>
-                  <h2>Hoezo pensioen is saai?</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae aspernatur iure, consectetur et architecto, possimus dicta fugit sint quia quas praesentium modi. Neque quia reprehenderit et in ab iure, blanditiis.</p>
-                  <a className="button" href="https://google.be" target="_blank" rel="noopener noreferrer">See it here!</a>
+                  <h2>Tutorial MyPension</h2>
+                  <p>Voor gedetailleerde info over jouw wettelijk pensioen, surf je best naar <a href="https://mypension.onprvp.fgov.be/" target="_blank" rel="noopener noreferrer">MyPension.be</a>. Heb je dit nog nooit gedaan? Geen nood! Deze tutorial gidst je door dit online pensioenportaal van de overheid!</p>
+                  {/* <a className="button" href="https://google.be" target="_blank" rel="noopener noreferrer">See it here!</a> */}
                 </div>
               </div>
               <div className="player_wrap">
-                <YouTubePlayer
+                <VimeoPlayer
                   className='react-player'
-                  url='https://www.youtube.com/watch?v=d46Azg3Pm4c'
+                  url='https://vimeo.com/283407923/'
                   controls
                   width='100%'
-                  height='280px'
+                  height='203px'
                 />
               </div>
             </div>

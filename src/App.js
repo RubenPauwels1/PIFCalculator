@@ -94,7 +94,7 @@ class App extends Component {
     return (
       <div className={`App Page${page}`}>
         <div className="Page" page={page} >
-          <CSSTransitionGroup transitionName="slide" transitionEnterTimeout={300} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={300}>
+          {/* <CSSTransitionGroup transitionName="slide" transitionEnterTimeout={300} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={300}> */}
             <CurrentPage page={page}/>
             {page === 1 && <FirstPage
               selectGender={this.selectGender}
@@ -141,7 +141,7 @@ class App extends Component {
               resetAll={this.resetAll}
               fields={this.state}
               />}
-            </CSSTransitionGroup>
+            {/* </CSSTransitionGroup> */}
           </div>
       </div>
     );
